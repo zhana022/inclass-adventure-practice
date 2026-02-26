@@ -1,0 +1,78 @@
+
+
+  body {
+    background-color:black;
+    color: white;
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 0 20px;
+    font-family: "Rubik Bubbles", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+    overflow-x: hidden;
+  }
+
+  #scene-text {
+    font-size: 37px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+  }
+
+  #choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  img{
+    position: absolute;
+    top: 65vh;
+    left: -10vw;
+  }
+
+  button {
+    background-image: url(twocats.jpg);
+    background-position: center -50px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 22px;
+    padding: 10px 16px;
+    font-size: 23px;
+    font-family: "Rubik Bubbles", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+    height: 30vh;
+    animation: colorchange infinite 3s;
+    text-shadow: 3px 3px 5px black;
+  }
+
+  button:hover {
+    box-shadow: 10px 5px 20px yellow;
+    opacity: 0.7;
+  }
+
+  #restart-btn {
+    display: none;
+    margin-top: 20px;
+  }
+
+  @keyframes colorchange{
+    0%{
+      color: gray;
+    }
+    25%{
+      color: white;
+    }
+    50%{
+      color: gray;
+    }
+    75%{
+      color: white;
+    }
+    100%{
+      color: gray;
+    }
+  }
+

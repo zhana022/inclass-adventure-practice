@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choose Your Own Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Audiowide&family=DM+Serif+Text:ital@0;1&family=Fredericka+the+Great&family=GFS+Didot&family=Kalnia:wdth,wght@100..125,100..700&family=Kings&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Macondo&family=Moon+Dance&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playwrite+DE+SAS:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik+Bubbles&family=Savate:ital,wght@0,200..900;1,200..900&family=Sedan+SC&family=Syne:wght@400..800&family=Tourney:ital,wght@0,100..900;1,100..900&family=Turret+Road:wght@200;300;400;500;700;800&family=Workbench:BLED,SCAN@8,87&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <div id="story-box">
+    <p id="scene-text"></p>
+    <div id="choices"></div>
+    <button id="restart-btn" onclick="goToScene('start')">↩ Start over</button>
+  </div>
+
+  <script>
+
+    // ─────────────────────────────────────────
+    // THE STORY — each scene has:
+    //   text:    what the reader sees
+    //   choices: an array of buttons
+    //            each choice has a "label" and a "next" scene key
+    // ─────────────────────────────────────────
+
+    let story = {
+
+      start: {
+        text: "Two cats at home, they are called bubble tea and Ariel.",
+        choices: [
+          { label: "Raise them separately in two rooms.", next: "hello" },
+          { label: "Put them together in one room so that they might become familiar with each other",      next: "fight" }
+        ]
+      },
+
+      hello: {
+        text: "They seemed confused, staring at each other like: Hello?",
+        choices: [
+          { label: " Give them a box of toys for them to play",        next: "box" },
+          { label: "Give them only toys and put the box away",   next: "jump" }
+        ]
+      },
+
+      fight: {
+        text: "They fight every single day, they become furry and screaming at each other.",
+        choices: [
+          { label: "Raise them separately in two rooms", next: "hello" },
+          { label: "Give food to them to distract their attention", next: "food" }
+        ]
+      },
+
+      box: {
+        text: "They ignore all the toys and jump into the box '",
+        choices: [
+          { label: "Take away the box",  next: "end-stare" },
+          { label: "Fine then...",  next: "end-play" }
+        ]
+      },
+
+      food: {
+        text: "They ate from their own bowl and then from each other's bowl.",
+        choices: [
+          { label: "give them a box of toys for them to play",  next: "box" },
+          { label: "Fine then...",  next: "end-eat" }
+        ]
+      },
+
+      jump: {
+        text: "They find the box one day outside the room, and drag it back to their place.'",
+        choices: [
+          { label: "Throw it away!!!.",    next: "end-angry" },
+          { label: "Made a cat house for them",     next: "end-cry" }
+        ]
+      },
+
+      door: {
+        text: "How to raise two cats at the same time?????!!!!!",
+        choices: [
+          { label: "Take a look at the book",  next: "end-noway" }
+        ]
+      },
+
+      // ── ENDINGS ──
+
+      "end-stare": {
+        text: "They keep staring at you, and you know you have to give it back to them",
+        choices: [],
+        ending: true
+      },
+
+      "end-play": {
+        text: "The box was then destroyed... congratulations, you have to get another box for them ",
+        choices: [],
+        ending: true
+      },
+
+      "end-angry": {
+        text: "They keep staring at you, and you know you hvae to give it back to them",
+        choices: [],
+        ending: true
+      },
+
+      "end-noway": {
+        text: "There's nothing we can do, they are the gods.",
+        choices: [],
+        ending: true
+      },
+
+      "end-eat": {
+        text: "Thinner and fatter kittens.",
+        choices: [],
+        ending: true
+      },
+
+      "end-cry": {
+        text: "Start fighting for this cat house and finally destroy it.",
+        choices: [],
+        ending: true
+      },
+    };
+
+    // ─────────────────────────────────────────
+    // ENGINE — this reads the story object
+    // and builds the page for any scene
+    // ─────────────────────────────────────────
+
+    function goToScene(sceneKey) {
+
+      // Step 1: Look up the current scene using its key
+      let scene = story[sceneKey];
+
+      // Step 2: Show the scene text
+      document.getElementById("scene-text").textContent = scene.text;
+
+      // Step 3: Clear old buttons
+      let choicesBox = document.getElementById("choices");
+      choicesBox.innerHTML = "";
+
+      // Step 4: Create a button for each choice
+      for (let i = 0; i < scene.choices.length; i++) {
+
+        let choice = scene.choices[i]; // grab one choice
+
+        let btn = document.createElement("button"); // make a button
+        btn.textContent = choice.label;             // label it
+
+        // When clicked, go to the next scene
+        btn.onclick = function() {
+          goToScene(choice.next);
+        };
+
+        choicesBox.appendChild(btn); // add it to the page
+      }
+
+      // Step 5: If this is an ending, show the restart button
+      if (scene.ending) {
+        document.getElementById("restart-btn").style.display = "block";
+      } else {
+        document.getElementById("restart-btn").style.display = "none";
+      }
+
+    }
+
+    // Start the story on page load
+    goToScene("start");
+
+  </script>
+  <img src="movecat.gif" alt="">
+
+</body>
+</html>
